@@ -120,4 +120,12 @@ app.post(
   }
 );
 
+app.get("*", async (c) => {
+  // dist/index.html を返す
+  const file = await fetch("dist/index.html", { cf: { cacheTtl: 60 } });
+  return new Response(await file.text(), {
+    headers: { "content-type": "text/html" },
+  });
+});
+
 export default app;
