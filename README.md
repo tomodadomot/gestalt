@@ -55,6 +55,47 @@ npm run dev
 
 Your application will be available at [http://localhost:5173](http://localhost:5173).
 
+## API Example
+
+### チャットAPI成功例
+
+```bash
+curl -X POST http://localhost:8787/api/chat/00000000-0000-4000-8000-000000000000/message \
+  -H "Content-Type: application/json" \
+  -d '{"content":"こんにちは", "role":"user"}'
+```
+
+レスポンス例:
+```json
+{
+  "ok": true,
+  "value": {
+    "role": "assistant",
+    "content": "こんにちは！ご質問をどうぞ。"
+  }
+}
+```
+
+### バリデーションエラー例
+
+```bash
+curl -X POST http://localhost:8787/api/chat/invalid-id/message \
+  -H "Content-Type: application/json" \
+  -d '{"content":"", "role":"user"}'
+```
+
+レスポンス例:
+```json
+{
+  "ok": false,
+  "error": {
+    "type": "ValidationError",
+    "field": "chatId",
+    "message": "Invalid chatId"
+  }
+}
+```
+
 ## Production
 
 Build your project for production:
